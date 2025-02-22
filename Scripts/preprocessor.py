@@ -137,3 +137,13 @@ class Preprocessor:
             
         # Drop duplicate rows.
         self.df = self.df.drop_duplicates()
+        
+    def drop_columns(self, columns):
+        """
+        Drops the specified columns from the DataFrame.
+
+        Parameters:
+            - columns: list of column names to be dropped.
+        """
+        self.df = self.df.drop(columns=columns)
+        print(f"Dropped columns: {columns}")
