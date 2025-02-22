@@ -116,3 +116,40 @@ class Preprocessor:
         outlier_columns = [col for col in numerical_cols if not self.df[col].dropna().index.isin(outlier_indices).all()]
         print(f"Removing {len(outlier_indices)} rows flagged as outliers across columns: {', '.join(outlier_columns)}.")
         self.df = self.df.drop(index=outlier_indices)
+        
+    def handle_duplicates(self):
+        """
+        Finds and drops duplicate rows. Before dropping duplicates, prints out one example
+        of a duplicate record (with all of its duplicate occurrences).
+        """
+        duplicates = self.df[self.df.duplicated(keep=False)]
+        if not duplicates.empty:
+            # Pick the first duplicate row and print all occurrences of that record.
+            first_dup_index = duplicates.index[0]
+            duplicate_record = self.df.loc[first_dup_index]
+            # Create a mask for all rows identical to the duplicate_record.
+            mask = (self.df == duplicate_record).all(axis=1)
+            dup_group = self.df[mask]
+            print("Example duplicate group found:")
+            print(dup_group)
+        else:
+            print("No duplicates found.")
+            
+        # Drop duplicate rows.
+        self.df = self.df.drop_duplicates()
+        
+    def drop_columns(self, columns):
+        """
+        Drops the specified columns from the DataFrame.
+
+        Parameters:
+            - columns: list of column names to be dropped.
+        """
+        self.df = self.df.drop(columns=columns)
+        print(f"Dropped columns: {columns}")
+        
+    def get_dataframe(self):
+        """
+        Returns the processed DataFrame.
+        """
+        return self.df
