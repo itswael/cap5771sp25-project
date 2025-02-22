@@ -1,3 +1,5 @@
+import numpy as np
+import pandas as pd
 class Preprocessor:
     def __init__(self, df):
         """
@@ -60,3 +62,57 @@ class Preprocessor:
                 self.df[col].fillna(self.df[col].mode()[0], inplace=True)
             else:
                 self.df[col].fillna(method, inplace=True)
+
+    def handle_outliers(self):
+        """
+        Detects and removes rows with outliers using a majority voting approach.
+        A value is considered an outlier in a numeric column if at least two out of three methods
+        (IQR, Z-score, MAD) flag it.
+        """
+        # Identify numeric columns
+        numerical_cols = self.df.select_dtypes(include=['int64', 'float64']).columns
+        outlier_indices = set()
+
+        for col in numerical_cols:
+            # Use non-null data for calculations
+            col_data = self.df[col].dropna()
+
+            # IQR Method
+            Q1 = col_data.quantile(0.25)
+            Q3 = col_data.quantile(0.75)
+            IQR = Q3 - Q1
+            lower_bound = Q1 - 1.5 * IQR
+            upper_bound = Q3 + 1.5 * IQR
+            iqr_outliers = set(col_data[(col_data < lower_bound) | (col_data > upper_bound)].index)
+
+            # Z-score Method
+            mean = col_data.mean()
+            std = col_data.std()
+            z_scores = (col_data - mean) / std
+
+            # MAD Method
+            median = np.median(col_data)
+            abs_deviation = np.abs(col_data - median)
+            mad = np.median(abs_deviation)
+            mad_threshold = 3 * mad
+            mad_outliers = set(col_data[np.abs(col_data - median) > mad_threshold].index)
+
+            # Z-score Method
+            z_outliers = set(col_data[np.abs(z_scores) > 3].index)
+
+            # Democratic approach: flag index if flagged by at least 2 methods
+            combined_indices = set.union(iqr_outliers, z_outliers, mad_outliers)
+            for idx in combined_indices:
+                count = 0
+                if idx in iqr_outliers:
+                    count += 1
+                if idx in z_outliers:
+                    count += 1
+                if idx in mad_outliers:
+                    count += 1
+                if count >= 2:
+                    outlier_indices.add(idx)
+
+        outlier_columns = [col for col in numerical_cols if not self.df[col].dropna().index.isin(outlier_indices).all()]
+        print(f"Removing {len(outlier_indices)} rows flagged as outliers across columns: {', '.join(outlier_columns)}.")
+        self.df = self.df.drop(index=outlier_indices)

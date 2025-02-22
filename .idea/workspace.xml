@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd1d241a-9d08-4aa4-967b-a16d9990f844" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/preprocessor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/cap5771sp25-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cap5771sp25-project.iml" afterDir="false" />
+    <list default="true" id="fd1d241a-9d08-4aa4-967b-a16d9990f844" name="Changes" comment="refactored preprocessor.py">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/preprocessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/preprocessor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +79,28 @@
       <option name="presentableId" value="Default" />
       <updated>1739992508636</updated>
     </task>
+    <task id="LOCAL-00001" summary="implemented preprocessor.py, to handle nulls in the dataframe or a specific column.">
+      <option name="closed" value="true" />
+      <created>1740201645942</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740201645942</updated>
+    </task>
+    <task id="LOCAL-00002" summary="refactored preprocessor.py">
+      <option name="closed" value="true" />
+      <created>1740201701974</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1740201701974</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="implemented preprocessor.py, to handle nulls in the dataframe or a specific column." />
+    <MESSAGE value="refactored preprocessor.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactored preprocessor.py" />
   </component>
 </project>
