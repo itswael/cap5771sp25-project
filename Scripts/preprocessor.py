@@ -134,3 +134,6 @@ class Preprocessor:
             print(dup_group)
         else:
             print("No duplicates found.")
+            
+        # Drop duplicate rows.
+        self.df = self.df.drop_duplicates()
