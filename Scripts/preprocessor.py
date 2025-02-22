@@ -41,3 +41,22 @@ class Preprocessor:
                 self._handle_null_column(col, numeric_method if self.df[col].dtype in ['int64',
                                                                                        'float64'] else categorical_method)
 
+    def _handle_null_column(self, col, method):
+        """
+        Handles null values for a single column.
+
+        Parameters:
+          - col: the column to handle null values for.
+          - method: the method to use for handling null values.
+        """
+        if self.df[col].isnull().sum() > 0:
+            if method == 'drop':
+                self.df = self.df[self.df[col].notnull()]
+            elif method == 'mean':
+                self.df[col].fillna(self.df[col].mean(), inplace=True)
+            elif method == 'median':
+                self.df[col].fillna(self.df[col].median(), inplace=True)
+            elif method == 'mode':
+                self.df[col].fillna(self.df[col].mode()[0], inplace=True)
+            else:
+                self.df[col].fillna(method, inplace=True)
