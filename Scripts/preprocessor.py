@@ -147,3 +147,9 @@ class Preprocessor:
         """
         self.df = self.df.drop(columns=columns)
         print(f"Dropped columns: {columns}")
+        
+    def get_dataframe(self):
+        """
+        Returns the processed DataFrame.
+        """
+        return self.df
