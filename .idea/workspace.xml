@@ -1,30 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd1d241a-9d08-4aa4-967b-a16d9990f844" name="Changes" comment="" />
+    <list default="true" id="fd1d241a-9d08-4aa4-967b-a16d9990f844" name="Changes" comment="completed movie analysis on &#10;TMDb (Kaggle)&#10;IMDb&#10;Rotten Tomatoes Crtic&#10;Rotten Tomtoes Movie&#10;Data Sources">
+      <change afterPath="$PROJECT_DIR$/Scripts/IMDb_TMDb_RT_analysis.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/movie-analysis.ipynb" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="staging" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;itswael&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/itswael/cap5771sp25-project.git&quot;,
+    &quot;accountId&quot;: &quot;5de3c973-58b8-464a-9713-d73b0058648e&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2tGy3koRGKkaYmQi59DS6yVq66C" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;staging&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\itswa\Desktop\IDS\cap5771sp25-project\Scripts" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -41,6 +86,37 @@
       <option name="presentableId" value="Default" />
       <updated>1739992508636</updated>
     </task>
+    <task id="LOCAL-00001" summary="implemented preprocessor.py, to handle nulls in the dataframe or a specific column.">
+      <option name="closed" value="true" />
+      <created>1740201645942</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740201645942</updated>
+    </task>
+    <task id="LOCAL-00002" summary="refactored preprocessor.py">
+      <option name="closed" value="true" />
+      <created>1740201701974</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1740201701974</updated>
+    </task>
+    <task id="LOCAL-00003" summary="completed movie analysis on &#10;TMDb (Kaggle)&#10;IMDb&#10;Rotten Tomatoes Crtic&#10;Rotten Tomtoes Movie&#10;Data Sources">
+      <option name="closed" value="true" />
+      <created>1740352521197</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1740352521197</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="implemented preprocessor.py, to handle nulls in the dataframe or a specific column." />
+    <MESSAGE value="refactored preprocessor.py" />
+    <MESSAGE value="completed movie analysis on &#10;TMDb (Kaggle)&#10;IMDb&#10;Rotten Tomatoes Crtic&#10;Rotten Tomtoes Movie&#10;Data Sources" />
+    <option name="LAST_COMMIT_MESSAGE" value="completed movie analysis on &#10;TMDb (Kaggle)&#10;IMDb&#10;Rotten Tomatoes Crtic&#10;Rotten Tomtoes Movie&#10;Data Sources" />
   </component>
 </project>
