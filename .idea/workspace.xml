@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd1d241a-9d08-4aa4-967b-a16d9990f844" name="Changes" comment="implemented function to handle outliers">
-      <change afterPath="$PROJECT_DIR$/Scripts/movie-analysis.ipynb" afterDir="false" />
+    <list default="true" id="fd1d241a-9d08-4aa4-967b-a16d9990f844" name="Changes" comment="completed movie analysis on &#10;TMDb (Kaggle)&#10;IMDb&#10;Rotten Tomatoes Crtic&#10;Rotten Tomtoes Movie&#10;Data Sources">
+      <change afterPath="$PROJECT_DIR$/Scripts/IMDb_TMDb_RT_analysis.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/movie-analysis.ipynb" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,12 +102,21 @@
       <option name="project" value="LOCAL" />
       <updated>1740201701974</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="completed movie analysis on &#10;TMDb (Kaggle)&#10;IMDb&#10;Rotten Tomatoes Crtic&#10;Rotten Tomtoes Movie&#10;Data Sources">
+      <option name="closed" value="true" />
+      <created>1740352521197</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1740352521197</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="implemented preprocessor.py, to handle nulls in the dataframe or a specific column." />
     <MESSAGE value="refactored preprocessor.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactored preprocessor.py" />
+    <MESSAGE value="completed movie analysis on &#10;TMDb (Kaggle)&#10;IMDb&#10;Rotten Tomatoes Crtic&#10;Rotten Tomtoes Movie&#10;Data Sources" />
+    <option name="LAST_COMMIT_MESSAGE" value="completed movie analysis on &#10;TMDb (Kaggle)&#10;IMDb&#10;Rotten Tomatoes Crtic&#10;Rotten Tomtoes Movie&#10;Data Sources" />
   </component>
 </project>
