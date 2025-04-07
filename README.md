@@ -7,6 +7,28 @@
 ## Project Overview
 This project performs a detailed exploratory data analysis (EDA) on a movie dataset to uncover revenue trends by year and month. The objective is to understand historical revenue shifts, identify seasonal impacts on revenue, and predict revenue which can be used for optimal movie release periods.
 
+## Project Structure
+```
+cap5771sp25-project/
+│
+├── .idea                           # PyCharm IDE configuration files
+├── data                            # Raw datasets storage
+│   └── data.txt                    # Data documentation file
+├── features                        # Processed feature outputs
+│   ├── features_scores.txt         # Feature importance metrics
+│   └── significant_features.txt    # Statistically significant features
+├── Report                          # Project documentation
+│   ├── Milestone1.pdf              # Milestone 1 report
+│   └── Milestone2.pdf              # Milestone 2 report
+├── Scripts                         # Source code directory
+│   ├── __pycache__                # Python bytecode cache
+│   ├── main.ipynb                  # Jupyter notebook for Milestone 1 and Milestone 2
+│   ├── preprocessor.py             # Data cleaning scripts
+│   └── requirements.txt            # Python dependencies
+├── .gitignore                      # Git exclusion rules
+└── README.md                       # Project overview document (This file)
+```
+
 ## Dataset Description
 The dataset used in this analysis contains various attributes of movies, including release dates, genres, budgets, revenues, and audience and critic ratings. The data covers films released over the past century, providing a comprehensive view of the industry dynamics.
 
