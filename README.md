@@ -21,7 +21,7 @@ cap5771sp25-project/
 │   ├── Milestone1.pdf              # Milestone 1 report
 │   └── Milestone2.pdf              # Milestone 2 report
 ├── Scripts                         # Source code directory
-│   ├── __pychache__                # Python bytecode cache
+│   ├── __pycache__                # Python bytecode cache
 │   ├── main.ipynb                  # Jupyter notebook for Milestone 1 and Milestone 2
 │   ├── preprocessor.py             # Data cleaning scripts
 │   └── requirements.txt            # Python dependencies
