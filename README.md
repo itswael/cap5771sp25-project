@@ -10,31 +10,22 @@ This project performs a detailed exploratory data analysis (EDA) on a movie data
 ## Project Structure
 cap5771sp25-project/
 │
-├── inferTypeTests.plt      # Test cases with infer
-├── ProblemStatment.md      # Problem statement documentation
-├── README.md               # Project overview and instructions
-├── typeInf.pl              # Main Prolog file for type inference logic
-└── typeInf.plt             # Test cases for implemented type inference
-
-cap5771sp25-project/
-│
-├── .idea
-├── data
-│   └── data.txt
-├── features
-│   ├── features_scores.txt
-│   └── significant_features.txt
-├── Report
-│   ├── Milestone1.pdf
-│   └── Milestone2.pdf
-├── Scripts
-│   ├── _pychache_
-│   ├── main.ipynb
-│   ├── preprocessor.py
-│   ├── requirements.txt
-│   └──
-├── .gitignore
-└── README.md
+├── .idea                           # PyCharm IDE configuration files
+├── data                            # Raw datasets storage
+│   └── data.txt                    # Data documentation file
+├── features                        # Processed feature outputs
+│   ├── features_scores.txt         # Feature importance metrics
+│   └── significant_features.txt    # Statistically significant features
+├── Report                          # Project documentation
+│   ├── Milestone1.pdf              # First project milestone report
+│   └── Milestone2.pdf              # Second project milestone report
+├── Scripts                         # Source code directory
+│   ├── _pychache_                  # Python bytecode cache
+│   ├── main.ipynb                  # Jupyter notebook for analysis
+│   ├── preprocessor.py             # Data cleaning scripts
+│   └── requirements.txt            # Python dependencies
+├── .gitignore                      # Git exclusion rules
+└── README.md                       # Project overview document (This file)
 
 ## Dataset Description
 The dataset used in this analysis contains various attributes of movies, including release dates, genres, budgets, revenues, and audience and critic ratings. The data covers films released over the past century, providing a comprehensive view of the industry dynamics.
