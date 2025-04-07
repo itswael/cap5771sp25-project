@@ -7,6 +7,35 @@
 ## Project Overview
 This project performs a detailed exploratory data analysis (EDA) on a movie dataset to uncover revenue trends by year and month. The objective is to understand historical revenue shifts, identify seasonal impacts on revenue, and predict revenue which can be used for optimal movie release periods.
 
+## Project Structure
+cap5771sp25-project/
+│
+├── inferTypeTests.plt      # Test cases with infer
+├── ProblemStatment.md      # Problem statement documentation
+├── README.md               # Project overview and instructions
+├── typeInf.pl              # Main Prolog file for type inference logic
+└── typeInf.plt             # Test cases for implemented type inference
+
+cap5771sp25-project/
+│
+├── .idea
+├── data
+│   └── data.txt
+├── features
+│   ├── features_scores.txt
+│   └── significant_features.txt
+├── Report
+│   ├── Milestone1.pdf
+│   └── Milestone2.pdf
+├── Scripts
+│   ├── _pychache_
+│   ├── main.ipynb
+│   ├── preprocessor.py
+│   ├── requirements.txt
+│   └──
+├── .gitignore
+└── README.md
+
 ## Dataset Description
 The dataset used in this analysis contains various attributes of movies, including release dates, genres, budgets, revenues, and audience and critic ratings. The data covers films released over the past century, providing a comprehensive view of the industry dynamics.
 
