@@ -17,11 +17,11 @@ cap5771sp25-project/
 │   ├── features_scores.txt         # Feature importance metrics
 │   └── significant_features.txt    # Statistically significant features
 ├── Report                          # Project documentation
-│   ├── Milestone1.pdf              # First project milestone report
-│   └── Milestone2.pdf              # Second project milestone report
+│   ├── Milestone1.pdf              # Milestone 1 report
+│   └── Milestone2.pdf              # Milestone 2 report
 ├── Scripts                         # Source code directory
 │   ├── _pychache_                  # Python bytecode cache
-│   ├── main.ipynb                  # Jupyter notebook for analysis
+│   ├── main.ipynb                  # Jupyter notebook for Milestone 1 and Milestone 2
 │   ├── preprocessor.py             # Data cleaning scripts
 │   └── requirements.txt            # Python dependencies
 ├── .gitignore                      # Git exclusion rules
