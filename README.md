@@ -41,7 +41,7 @@ Before you begin, ensure you have the following installed:
 ### Required Datasets
 - [IMDb](https://datasets.imdbws.com/) 
 - [TMDb](https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies)
-- [Rotten Tomatoes](https://www.kaggle.com/datasets/asaniczka/rotten-tomatoes-movies-and-critics-dataset)
+- [Rotten Tomatoes](https://www.kaggle.com/code/stefanoleone992/rotten-tomatoes-eda)
 - [COUNTRY CODES ALPHA-2 & ALPHA-3](https://www.kaggle.com/datasets/emolodov/country-codes-alpha2-alpha3/data)
 
 ### Required Python Libraries
@@ -93,3 +93,20 @@ Open main.ipynb and run the cells sequentially to reproduce the analysis.
 - [asaniczka](https://www.kaggle.com/asaniczka) for providing the TMDb datasets used in this analysis.
 - [Emil Molodov](https://www.kaggle.com/emolodov) for providing the country codes dataset.
 - [stefano leone](https://www.kaggle.com/stefanoleone992) for providing the Rotten Tomatoes datasets used in this analysis.
+
+# Dataset Licenses:
+- IMDB:
+```
+Information courtesy of
+IMDb
+(https://www.imdb.com).
+Used with permission.
+```
+-TMDB (Kaggle)
+[Open Data Commons Attribution License (ODC-By) v1.0](https://opendatacommons.org/licenses/by/1-0/index.html)
+
+-Rotten Tomatoes (Kaggle)
+[CC0 (Public Domain Dedication)](https://creativecommons.org/publicdomain/zero/1.0/deed.en)
+
+-COUNTRY CODES (Kaggle)
+[CC0](https://creativecommons.org/public-domain/cc0/)
