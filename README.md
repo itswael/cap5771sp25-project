@@ -21,12 +21,13 @@ cap5771sp25-project/
 │   ├── Milestone1.pdf              # Milestone 1 report
 │   └── Milestone2.pdf              # Milestone 2 report
 ├── Scripts                         # Source code directory
-│   ├── __pycache__                # Python bytecode cache
+│   ├── __pycache__                 # Python bytecode cache
 │   ├── main.ipynb                  # Jupyter notebook for Milestone 1 and Milestone 2
 │   ├── preprocessor.py             # Data cleaning scripts
 │   └── requirements.txt            # Python dependencies
 ├── .gitignore                      # Git exclusion rules
-└── README.md                       # Project overview document (This file)
+├── README.md                       # Project overview document (This file)
+└── License                         # MIT License File
 ```
 
 ## Dataset Description
@@ -79,7 +80,7 @@ jupyter notebook
 ```
 Update the file path in the notebook to point to the correct dataset location.
 
-Open movie analysis.ipynb and run the cells sequentially to reproduce the analysis.
+Open main.ipynb and run the cells sequentially to reproduce the analysis.
 
 # Contributions
 - Mohammad Wael: 
