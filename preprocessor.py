@@ -60,3 +60,10 @@ def scale_gross_and_budget(df):
 
     return df
 
+def apply_label_encoding(df):
+    for feature in categorical_features:
+        df[feature] = df[feature].astype(str)
+        le = LabelEncoder()
+        df[feature] = le.fit_transform(df[feature])
+    return df
+
