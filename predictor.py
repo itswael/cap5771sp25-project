@@ -39,3 +39,13 @@ def predict_gross_revenue(input_data, top_performing_model):
     log_prediction = top_performing_model.predict(processed_data)
     prediction = np.exp(log_prediction) - 1
     return prediction[0]
+
+def predictor(input_data):
+    """Predict gross revenue using the trained model"""
+    try:
+        top_performing_model = refresh_model()
+        predicted_gross = predict_gross_revenue(input_data, top_performing_model)
+        return predicted_gross
+    except Exception as e:
+        print(f"Prediction failed: {str(e)}")
+        raise
