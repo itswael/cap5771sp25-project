@@ -74,3 +74,21 @@ def remove_unnecessary_columns(df):
         df = df.drop(["budget"], axis=1)
     return df
 
+def process_data(df):
+    df = ((df.copy())
+              .perform_feature_engineering(df)
+              .scale_gross_and_budget(df)
+              .apply_label_encoding(df))
+
+    imputer = SimpleImputer(strategy="median")
+    df[numerical_features] = imputer.fit_transform(df[numerical_features])
+
+    scaler = StandardScaler()
+    df[numerical_features] = scaler.fit_transform(df[numerical_features])
+
+    df = remove_unnecessary_columns(df)
+
+    return df
+
+
+
