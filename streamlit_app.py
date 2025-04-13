@@ -125,6 +125,39 @@ def insights_page():
         # Add selection widget
         st.session_state.selected_point = selected_seq
 
+    with col2:
+        st.subheader("Prediction Trend")
+
+        # Create DataFrame for plotting
+        plot_df = pd.DataFrame({
+            'Sequence': list(predictions_with_params.keys()),
+            'Revenue': [item['revenue'] for item in predictions_with_params.values()],
+        })
+
+        # Create colors list to highlight selected bar
+        colors = ['skyblue'] * len(plot_df)
+        colors[st.session_state.selected_point - 1] = 'orange'
+
+        # Create interactive plot
+        fig = px.bar(
+            plot_df,
+            x='Sequence',
+            y='Revenue',
+            title='Revenue Predictions',
+            labels={'Revenue': 'Predicted Revenue ($)'}
+        )
+
+        # Update marker colors to highlight selected point
+        fig.update_traces(marker_color=colors)
+
+        fig.update_layout(
+            yaxis_tickprefix='$',
+            yaxis_tickformat=',',
+            hovermode='closest'
+        )
+
+        # Display the plot (without trying to capture clicks)
+        st.plotly_chart(fig, use_container_width=True)
 
 if __name__ == "__main__":
     main()
