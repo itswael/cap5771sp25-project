@@ -159,5 +159,23 @@ def insights_page():
         # Display the plot (without trying to capture clicks)
         st.plotly_chart(fig, use_container_width=True)
 
+        # Third column: Parameter details for the selected prediction
+        with col3:
+            selected_seq = st.session_state.selected_point
+            selected_prediction = predictions_with_params[selected_seq]
+
+            st.subheader(f"Parameters (Seq #{selected_seq})")
+
+            # Display selected prediction's input parameters
+            st.write("**Input Parameters:**")
+            for key, value in selected_prediction['params'].items():
+                st.write(f"- {key}: {value}")
+
+            # Display prediction stats
+            st.write("**Prediction Results:**")
+            st.write(f"- Revenue: ${selected_prediction['revenue']:,.2f}")
+            if 'timestamp' in selected_prediction:
+                st.write(f"- Time: {selected_prediction['timestamp']}")
+
 if __name__ == "__main__":
     main()
