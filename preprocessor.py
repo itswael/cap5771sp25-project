@@ -34,3 +34,21 @@ numerical_features = [
         "is_high_votes",
         "is_high_score",
     ]
+
+def perform_feature_engineering(df):
+    # Feature engineering
+    df["budget_vote_ratio"] = df["budget"] / (df["votes"] + 1)
+    df["budget_runtime_ratio"] = df["budget"] / (df["runtime"] + 1)
+    df["budget_score_ratio"] = df["log_budget"] / (df["score"] + 1)
+    df["vote_score_ratio"] = df["votes"] / (df["score"] + 1)
+    df["budget_year_ratio"] = df["log_budget"] / (df["year"] - df["year"].min() + 1)
+    df["vote_year_ratio"] = df["votes"] / (df["year"] - df["year"].min() + 1)
+    df["score_runtime_ratio"] = df["score"] / (df["runtime"] + 1)
+    df["budget_per_minute"] = df["budget"] / (df["runtime"] + 1)
+    df["votes_per_year"] = df["votes"] / (df["year"] - df["year"].min() + 1)
+    df["is_recent"] = (df["year"] >= df["year"].quantile(0.75)).astype(int)
+    df["is_high_budget"] = (df["log_budget"] >= df["log_budget"].quantile(0.75)).astype(int)
+    df["is_high_votes"] = (df["votes"] >= df["votes"].quantile(0.75)).astype(int)
+    df["is_high_score"] = (df["score"] >= df["score"].quantile(0.75)).astype(int)
+    return df
+
