@@ -67,3 +67,10 @@ def apply_label_encoding(df):
         df[feature] = le.fit_transform(df[feature])
     return df
 
+def remove_unnecessary_columns(df):
+    if "gross" in df.columns:
+        df = df.drop(["gross"], axis=1)
+    if "budget" in df.columns:
+        df = df.drop(["budget"], axis=1)
+    return df
+
