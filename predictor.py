@@ -49,3 +49,23 @@ def predictor(input_data):
     except Exception as e:
         print(f"Prediction failed: {str(e)}")
         raise
+
+# input_data = {
+#     "budget": 19000000.0,
+#     "votes": 927000.0,
+#     "runtime": 146.0,
+#     "score": 8.4,
+#     "year": 1980,
+#     "released": "1980-13-06",
+#     "writer": "Stephen King",
+#     "rating": "R",
+#     "name": "The Shining",
+#     "genre": "Drama",
+#     "director": "Stanley Kubrick",
+#     "star": "Jack Nicholson",
+#     "country": "United Kingdom",
+#     "company": "Warner Bros.",
+# }
+# top_performing_model = refresh_model()
+# predicted_gross = predict_gross(input_data, top_performing_model)
+# print(f"Predicted Gross Revenue: ${predicted_gross:,.2f}")
