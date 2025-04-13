@@ -90,5 +90,15 @@ def process_data(df):
 
     return df
 
+def process_features(df):
+    cleaned_df = process_data(df)
 
+    if "log_gross" in cleaned_df.columns:
+        y = cleaned_df["log_gross"]
+        X = cleaned_df.drop("log_gross", axis=1)
+    else:
+        y = None
+        X = cleaned_df
+
+    return X, y
 
