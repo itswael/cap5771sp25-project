@@ -29,3 +29,13 @@ def refresh_model():
     top_performing_model.fit(X, y)
     return top_performing_model
 
+def predict_gross_revenue(input_data, top_performing_model):
+    processed_data = pre.process_data(pd.DataFrame([input_data]))
+    required_features = top_performing_model.feature_names_in_
+    for feature in required_features:
+        if feature not in processed_data.columns:
+            processed_data[feature] = 0
+    processed_data = processed_data[required_features]
+    log_prediction = top_performing_model.predict(processed_data)
+    prediction = np.exp(log_prediction) - 1
+    return prediction[0]
