@@ -1,6 +1,19 @@
 import streamlit as st
 import predictor as pred
+import pandas as pd
 
+predictions_with_params = {
+    1: {"revenue": 1000000, "params": {"name": "Movie 1", "budget": 5000000, "director": "Director A"}},
+    2: {"revenue": 2000000, "params": {"name": "Movie 2", "budget": 10000000, "director": "Director B"}},
+    3: {"revenue": 3000000, "params": {"name": "Movie 3", "budget": 15000000, "director": "Director C"}},
+    4: {"revenue": 4000000, "params": {"name": "Movie 4", "budget": 20000000, "director": "Director D"}},
+    5: {"revenue": 5000000, "params": {"name": "Movie 5", "budget": 25000000, "director": "Director E"}},
+    6: {"revenue": 6000000, "params": {"name": "Movie 6", "budget": 30000000, "director": "Director F"}},
+    7: {"revenue": 7000000, "params": {"name": "Movie 7", "budget": 35000000, "director": "Director G"}},
+    8: {"revenue": 8000000, "params": {"name": "Movie 8", "budget": 40000000, "director": "Director H"}},
+    9: {"revenue": 9000000, "params": {"name": "Movie 9", "budget": 45000000, "director": "Director I"}},
+    10: {"revenue": 10000000, "params": {"name": "Movie 10", "budget": 50000000, "director": "Director J"}},
+}
 
 def main():
     st.set_page_config(page_title="𝚏𝚒𝚕𝚖𝚏𝚘𝚛𝚝𝚞𝚗𝚎", page_icon="🎬")
@@ -83,11 +96,34 @@ def about_page():
 
 
 def insights_page():
-    st.title("Movie Industry Insights")
-    st.write("Explore data trends and patterns from our movie dataset.")
+    st.title("Today's Predictions")
+    #st.write("Shows plot of your today's prediction insights.")
 
-    # Placeholder for future visualizations
-    st.info("Data visualizations coming soon!")
+    # Create three columns with specified width ratios
+    col1, col2, col3 = st.columns([2, 5, 3])  # 20%, 50%, 30%
+
+    # Initialize session state for selected point if not exists
+    if 'selected_point' not in st.session_state:
+        st.session_state.selected_point = 1
+
+    # First column: Sequence number and predicted revenue + selection widget
+    with col1:
+        st.subheader("Predictions")
+
+        selected_seq = st.selectbox(
+            "Select prediction to view details:",
+            options=list(predictions_with_params.keys()),
+            index=st.session_state.selected_point - 1
+        )
+
+        pred_df = pd.DataFrame({
+            "Sequence": [k for k in predictions_with_params.keys()],
+            "Revenue ($)": [f"${d['revenue']:,.2f}" for d in predictions_with_params.values()],
+        }, index=None)
+        st.dataframe(pred_df, use_container_width=True, hide_index=True)
+
+        # Add selection widget
+        st.session_state.selected_point = selected_seq
 
 
 if __name__ == "__main__":
