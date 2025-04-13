@@ -1,6 +1,7 @@
 import streamlit as st
 import predictor as pred
 import pandas as pd
+import plotly.express as px
 
 predictions_with_params = {
     1: {"revenue": 1000000, "params": {"name": "Movie 1", "budget": 5000000, "director": "Director A"}},
