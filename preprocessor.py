@@ -52,3 +52,11 @@ def perform_feature_engineering(df):
     df["is_high_score"] = (df["score"] >= df["score"].quantile(0.75)).astype(int)
     return df
 
+def scale_gross_and_budget(df):
+    if "gross" in df.columns:
+        df["log_gross"] = np.log1p(df["gross"])
+    if "budget" in df.columns:
+        df["log_budget"] = np.log1p(df["budget"])
+
+    return df
+
