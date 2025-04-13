@@ -1,5 +1,5 @@
 import streamlit as st
-import predic as pred
+import predictor as pred
 
 
 # Streamlit UI Components
