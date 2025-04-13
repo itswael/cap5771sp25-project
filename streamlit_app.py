@@ -2,10 +2,26 @@ import streamlit as st
 import predictor as pred
 
 
-# Streamlit UI Components
 def main():
-    st.set_page_config(page_title="FilmFortune", page_icon="🎬")
-    st.title("🎥 FilmFortune - Movie Revenue Prediction")
+    st.set_page_config(page_title="𝚏𝚒𝚕𝚖𝚏𝚘𝚛𝚝𝚞𝚗𝚎", page_icon="🎬")
+    st.title("🎥 𝚏𝚒𝚕𝚖𝚏𝚘𝚛𝚝𝚞𝚗𝚎 - 𝚖𝚘𝚟𝚒𝚎 𝚛𝚎𝚟𝚎𝚗𝚞𝚎 𝚙𝚛𝚎𝚍𝚒𝚌𝚝𝚒𝚘𝚗")
+
+    # Create tabs for top navigation
+    tab1, tab2, tab3 = st.tabs(["Predict Revenue", "Insights", "About"])
+
+    # Add content to each tab
+    with tab1:
+        prediction_page()
+
+    with tab3:
+        about_page()
+
+    with tab2:
+        insights_page()
+
+
+def prediction_page():
+    # st.title("🎥 FilmFortune - Movie Revenue Prediction")
 
     with st.form("movie_inputs"):
         col1, col2, col3 = st.columns(3)
@@ -48,6 +64,31 @@ def main():
                 st.error("An error occurred during prediction. Please try again.")
 
 
+def about_page():
+    st.title("About FilmFortune")
+    st.write("""
+    FilmFortune uses machine learning to predict movie revenue based on key factors like budget,
+    cast, genre, and release timing.
+
+    Our model analyzes historical data from successful films to provide accurate revenue estimates
+    for your movie project.
+    """)
+
+    st.subheader("How It Works")
+    st.write("""
+    1. Enter your movie details in the form
+    2. Our XGBoost model processes the information
+    3. Get an estimated box office revenue prediction
+    """)
+
+
+def insights_page():
+    st.title("Movie Industry Insights")
+    st.write("Explore data trends and patterns from our movie dataset.")
+
+    # Placeholder for future visualizations
+    st.info("Data visualizations coming soon!")
+
+
 if __name__ == "__main__":
     main()
-
