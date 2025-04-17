@@ -5,30 +5,91 @@ from xgboost import XGBRegressor
 import preprocessor as pre
 
 
+# def refresh_model():
+#     train_data = pd.read_csv("output/output.csv")
+#     # print("Available columns:", train_data.columns.tolist())
+#     X, y = pre.process_features(train_data)
+#     # print("Feature processing done.")
+#     param_grid = {
+#         "n_estimators": [100, 500],
+#         "max_depth": [3, 6],
+#         "learning_rate": [0.05, 0.1],
+#     }
+#     grid_search = GridSearchCV(
+#         estimator=XGBRegressor(objective="reg:squarederror", random_state=42),
+#         param_grid=param_grid,
+#         cv=5,
+#         scoring="r2",
+#         n_jobs=-1,
+#     )
+#     grid_search.fit(X, y)
+#     top_parameters = grid_search.best_params_
+#     top_performing_model = XGBRegressor(
+#         objective="reg:squarederror", random_state=42, **top_parameters
+#     )
+#     top_performing_model.fit(X, y)
+#     return top_performing_model
+
+from joblib import dump, load
+import os
+
+
 def refresh_model():
-    train_data = pd.read_csv("output/output.csv")
-    # print("Available columns:", train_data.columns.tolist())
-    X, y = pre.process_features(train_data)
-    # print("Feature processing done.")
-    param_grid = {
-        "n_estimators": [100, 500],
-        "max_depth": [3, 6],
-        "learning_rate": [0.05, 0.1],
-    }
-    grid_search = GridSearchCV(
-        estimator=XGBRegressor(objective="reg:squarederror", random_state=42),
-        param_grid=param_grid,
-        cv=5,
-        scoring="r2",
-        n_jobs=-1,
-    )
-    grid_search.fit(X, y)
-    top_parameters = grid_search.best_params_
-    top_performing_model = XGBRegressor(
-        objective="reg:squarederror", random_state=42, **top_parameters
-    )
-    top_performing_model.fit(X, y)
-    return top_performing_model
+    model_path = "saved_models/xgb_model.joblib"
+
+    # Create models directory if it doesn't exist
+    os.makedirs("saved_models", exist_ok=True)
+
+    try:
+        # Try loading existing model first
+        if os.path.exists(model_path):
+            try:
+                return load(model_path)
+            except Exception as e:
+                print(f"Could not load existing model: {e}. Training new model.")
+
+        # Train new model
+        train_data = pd.read_csv("output/output.csv")
+        X, y = pre.process_features(train_data)
+
+        param_grid = {
+            "n_estimators": [100, 500],
+            "max_depth": [3, 6],
+            "learning_rate": [0.05, 0.1],
+        }
+        grid_search = GridSearchCV(
+            estimator=XGBRegressor(objective="reg:squarederror", random_state=42),
+            param_grid=param_grid,
+            cv=5,
+            scoring="r2",
+            n_jobs=-1,
+        )
+        grid_search.fit(X, y)
+        top_parameters = grid_search.best_params_
+        top_performing_model = XGBRegressor(
+            objective="reg:squarederror", random_state=42, **top_parameters
+        )
+        top_performing_model.fit(X, y)
+
+        # Save the trained model
+        dump(top_performing_model, model_path)
+        print(f"Model trained and saved to {model_path}")
+
+        return top_performing_model
+
+    except Exception as e:
+        print(f"Error in refresh_model: {e}")
+        # If we have existing model and current training failed, try to use the existing one
+        if os.path.exists(model_path):
+            return load(model_path)
+        raise
+
+def load_model():
+    model_path = "saved_models/xgb_model.joblib"
+    if os.path.exists(model_path):
+        return load(model_path)
+    else:
+        raise FileNotFoundError(f"Model file not found at {model_path}")
 
 def predict_gross_revenue(input_data, top_performing_model):
     processed_data = pre.process_data(pd.DataFrame([input_data]))
@@ -51,7 +112,8 @@ def predictor(input_data):
     for attempt in range(max_attempts):
         try:
             # Refresh the model
-            top_performing_model = refresh_model()
+            # top_performing_model = refresh_model()
+            top_performing_model = load_model()
 
             # Make prediction
             predicted_gross = predict_gross_revenue(input_data, top_performing_model)
@@ -88,6 +150,8 @@ def predictor(input_data):
 
     # This should not be reached but just in case
     return last_prediction
+
+# refresh_model()
 
 # input_data = {
 #     "budget": 19000000.0,
