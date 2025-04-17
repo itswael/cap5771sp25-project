@@ -2,8 +2,10 @@ import streamlit as st
 import predictor as pred
 import pandas as pd
 import plotly.express as px
+from datetime import datetime
+from collections import OrderedDict
 
-predictions_with_params = {
+initial_predictions = OrderedDict({
     1: {"revenue": 1000000, "params": {"name": "Movie 1", "budget": 5000000, "director": "Director A"}},
     2: {"revenue": 2000000, "params": {"name": "Movie 2", "budget": 10000000, "director": "Director B"}},
     3: {"revenue": 3000000, "params": {"name": "Movie 3", "budget": 15000000, "director": "Director C"}},
@@ -14,10 +16,15 @@ predictions_with_params = {
     8: {"revenue": 8000000, "params": {"name": "Movie 8", "budget": 40000000, "director": "Director H"}},
     9: {"revenue": 9000000, "params": {"name": "Movie 9", "budget": 45000000, "director": "Director I"}},
     10: {"revenue": 10000000, "params": {"name": "Movie 10", "budget": 50000000, "director": "Director J"}},
-}
+})
 
 def main():
     st.set_page_config(page_title="𝚏𝚒𝚕𝚖𝚏𝚘𝚛𝚝𝚞𝚗𝚎", page_icon="🎬")
+
+    # Initialize predictions in session state if they don't exist
+    if 'predictions' not in st.session_state:
+        st.session_state.predictions = initial_predictions.copy()
+
     st.title("🎥 𝚏𝚒𝚕𝚖𝚏𝚘𝚛𝚝𝚞𝚗𝚎 - 𝚖𝚘𝚟𝚒𝚎 𝚛𝚎𝚟𝚎𝚗𝚞𝚎 𝚙𝚛𝚎𝚍𝚒𝚌𝚝𝚒𝚘𝚗")
 
     # Create tabs for top navigation
@@ -35,8 +42,6 @@ def main():
 
 
 def prediction_page():
-    # st.title("🎥 FilmFortune - Movie Revenue Prediction")
-
     with st.form("movie_inputs"):
         col1, col2, col3 = st.columns(3)
 
@@ -74,6 +79,9 @@ def prediction_page():
                 st.metric(label="Estimated Revenue",
                           value=f"${prediction:,.2f}")
 
+                # Store the prediction with parameters
+                update_predictions_with_params(prediction, inputs)
+
             except Exception as e:
                 st.error("An error occurred during prediction. Please try again.")
 
@@ -98,12 +106,11 @@ def about_page():
 
 def insights_page():
     st.title("Today's Predictions")
-    #st.write("Shows plot of your today's prediction insights.")
 
     # Create three columns with specified width ratios
-    col1, col2, col3 = st.columns([2, 5, 3])  # 20%, 50%, 30%
+    col1, col2, col3 = st.columns([2, 5, 3])
 
-    # Initialize session state for selected point if not exists
+    # Initialize selected point if not exists
     if 'selected_point' not in st.session_state:
         st.session_state.selected_point = 1
 
@@ -111,16 +118,22 @@ def insights_page():
     with col1:
         st.subheader("Predictions")
 
-        selected_seq = st.selectbox(
-            "Select prediction to view details:",
-            options=list(predictions_with_params.keys()),
-            index=st.session_state.selected_point - 1
-        )
+        # Use the predictions from session state
+        keys = list(st.session_state.predictions.keys())
+        if keys:
+            selected_seq = st.selectbox(
+                "Select prediction to view details:",
+                options=keys,
+                index=min(st.session_state.selected_point - 1, len(keys) - 1) if st.session_state.selected_point <= len(keys) else 0
+            )
+        else:
+            selected_seq = None
+            st.write("No predictions available.")
 
         pred_df = pd.DataFrame({
-            "Sequence": [k for k in predictions_with_params.keys()],
-            "Revenue ($)": [f"${d['revenue']:,.2f}" for d in predictions_with_params.values()],
-        }, index=None)
+            "Sequence": list(st.session_state.predictions.keys()),
+            "Revenue ($)": [f"${d['revenue']:,.2f}" for d in st.session_state.predictions.values()],
+        })
         st.dataframe(pred_df, use_container_width=True, hide_index=True)
 
         # Add selection widget
@@ -131,13 +144,15 @@ def insights_page():
 
         # Create DataFrame for plotting
         plot_df = pd.DataFrame({
-            'Sequence': list(predictions_with_params.keys()),
-            'Revenue': [item['revenue'] for item in predictions_with_params.values()],
+            'Sequence': list(st.session_state.predictions.keys()),
+            'Revenue': [item['revenue'] for item in st.session_state.predictions.values()],
         })
 
         # Create colors list to highlight selected bar
         colors = ['skyblue'] * len(plot_df)
-        colors[st.session_state.selected_point - 1] = 'orange'
+        if st.session_state.selected_point in st.session_state.predictions:
+            selected_index = list(st.session_state.predictions.keys()).index(st.session_state.selected_point)
+            colors[selected_index] = 'orange'
 
         # Create interactive plot
         fig = px.bar(
@@ -160,10 +175,10 @@ def insights_page():
         # Display the plot (without trying to capture clicks)
         st.plotly_chart(fig, use_container_width=True)
 
-        # Third column: Parameter details for the selected prediction
-        with col3:
-            selected_seq = st.session_state.selected_point
-            selected_prediction = predictions_with_params[selected_seq]
+    # Third column: Parameter details for the selected prediction
+    with col3:
+        if selected_seq:
+            selected_prediction = st.session_state.predictions[selected_seq]
 
             st.subheader(f"Parameters (Seq #{selected_seq})")
 
@@ -177,6 +192,36 @@ def insights_page():
             st.write(f"- Revenue: ${selected_prediction['revenue']:,.2f}")
             if 'timestamp' in selected_prediction:
                 st.write(f"- Time: {selected_prediction['timestamp']}")
+        else:
+            st.write("No prediction selected.")
+
+
+def update_predictions_with_params(prediction, inputs):
+    # Make a deep copy of inputs to ensure we're not storing references
+    input_copy = {k: v for k, v in inputs.items()}
+
+    # Create new predictions dictionary
+    new_predictions = OrderedDict({
+        1: {
+            "revenue": float(prediction),  # Ensure it's a float
+            "params": input_copy,
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
+    })
+
+    # Add existing predictions (shifted by 1)
+    current_keys = list(st.session_state.predictions.keys())
+    for i, key in enumerate(current_keys):
+        if i >= 9:  # Keep only 9 existing predictions
+            break
+        new_predictions[i + 2] = st.session_state.predictions[key]
+
+    # Update session state - assign the entire dictionary at once
+    st.session_state.predictions = new_predictions
+
+    # Force a rerun to update the UI
+    # st.rerun()
+
 
 if __name__ == "__main__":
     main()
