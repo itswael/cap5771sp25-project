@@ -206,7 +206,15 @@ def update_predictions_with_params(prediction, inputs):
     # Update the predictions_with_params dictionary with the new prediction and inputs
     # Maintain last 9 remove others and insert new one, which makes total to be 10
     global predictions_with_params
+    # Load existing predictions from file
+    try:
+        with open("temp/predictions.txt", "r") as f:
+            predictions_with_params = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"Could not load predictions: {e}")
+
     # print("updating")
+    # print(predictions_with_params)
     preds = {}
     # Add new prediction with parameters
     preds[1] = {
@@ -215,9 +223,23 @@ def update_predictions_with_params(prediction, inputs):
     }
     # Increment sequence number for the next prediction
     remaining_preds = len(predictions_with_params) if len(predictions_with_params) < 10 else 9
-    for i in range(1, remaining_preds+1):
-        preds[i+1] = predictions_with_params.pop(i)
-    predictions_with_params = preds
+    print(remaining_preds)
+    try:
+        # for i in range(1, remaining_preds+1):
+        #     preds[i+1] = predictions_with_params.pop(i)
+        # Add existing predictions (up to 9 more for a total of 10)
+        count = 2  # Start from index 2
+        keys = predictions_with_params.keys()
+        for key in keys:
+            if count > 10:  # Keep only 10 predictions total
+                break
+            preds[count] = predictions_with_params[key]
+            count += 1
+        predictions_with_params = preds.copy()
+    except Exception as e:
+        print(f"Error updating predictions: {e}")
+    # print("after updating")
+    # print(predictions_with_params)
     # store it in a text file
     try:
         with open("temp/predictions.txt", "w") as f:
