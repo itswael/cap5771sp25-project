@@ -7,8 +7,9 @@ import preprocessor as pre
 
 def refresh_model():
     train_data = pd.read_csv("output/output.csv")
-    # print("Available columns:", df.columns.tolist())
+    # print("Available columns:", train_data.columns.tolist())
     X, y = pre.process_features(train_data)
+    # print("Feature processing done.")
     param_grid = {
         "n_estimators": [100, 500],
         "max_depth": [3, 6],
@@ -44,6 +45,7 @@ def predictor(input_data):
     """Predict gross revenue using the trained model"""
     try:
         top_performing_model = refresh_model()
+        # print("Model refreshed successfully.")
         predicted_gross = predict_gross_revenue(input_data, top_performing_model)
         return predicted_gross
     except Exception as e:
