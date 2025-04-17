@@ -74,11 +74,14 @@ def remove_unnecessary_columns(df):
         df = df.drop(["budget"], axis=1)
     return df
 
-def process_data(df):
-    df = ((df.copy())
-              .perform_feature_engineering(df)
-              .scale_gross_and_budget(df)
-              .apply_label_encoding(df))
+def process_data(idf):
+    df = idf.copy()
+    df = scale_gross_and_budget(df)
+    # print("scaling done")
+    df = perform_feature_engineering(df)
+    # print("feature engineering done")
+    df = apply_label_encoding(df)
+    # print("label encoding done")
 
     imputer = SimpleImputer(strategy="median")
     df[numerical_features] = imputer.fit_transform(df[numerical_features])
@@ -92,6 +95,7 @@ def process_data(df):
 
 def process_features(df):
     cleaned_df = process_data(df)
+    # print("data processing done")
 
     if "log_gross" in cleaned_df.columns:
         y = cleaned_df["log_gross"]
