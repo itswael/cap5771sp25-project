@@ -7,8 +7,9 @@ import preprocessor as pre
 
 def refresh_model():
     train_data = pd.read_csv("output/output.csv")
-    # print("Available columns:", df.columns.tolist())
+    # print("Available columns:", train_data.columns.tolist())
     X, y = pre.process_features(train_data)
+    # print("Feature processing done.")
     param_grid = {
         "n_estimators": [100, 500],
         "max_depth": [3, 6],
@@ -40,15 +41,53 @@ def predict_gross_revenue(input_data, top_performing_model):
     prediction = np.exp(log_prediction) - 1
     return prediction[0]
 
+
 def predictor(input_data):
-    """Predict gross revenue using the trained model"""
-    try:
-        top_performing_model = refresh_model()
-        predicted_gross = predict_gross_revenue(input_data, top_performing_model)
-        return predicted_gross
-    except Exception as e:
-        print(f"Prediction failed: {str(e)}")
-        raise
+    """Predict gross revenue using the trained model with retry logic for fitFailedWarning"""
+    max_attempts = 3
+    min_diff_threshold = 0.05  # 5% threshold
+    last_prediction = None
+
+    for attempt in range(max_attempts):
+        try:
+            # Refresh the model
+            top_performing_model = refresh_model()
+
+            # Make prediction
+            predicted_gross = predict_gross_revenue(input_data, top_performing_model)
+
+            # If this isn't the first attempt, check if the prediction difference is small enough
+            if last_prediction is not None:
+                diff_ratio = abs(predicted_gross - last_prediction) / max(last_prediction, 1)
+
+                if diff_ratio < min_diff_threshold:
+                    print(f"Prediction stabilized after {attempt + 1} attempts (diff: {diff_ratio:.2%})")
+                    return predicted_gross
+
+            # Store this prediction for comparison in the next iteration
+            last_prediction = predicted_gross
+
+            # If this is the last attempt or no fit failed warning, return the prediction
+            if attempt == max_attempts - 1:
+                return predicted_gross
+
+        except Exception as e:
+            error_str = str(e)
+            if "FitFailedWarning" in error_str:
+                print(f"Fit failed on attempt {attempt + 1}, retrying...")
+                if attempt == max_attempts - 1:
+                    print(f"Maximum attempts reached. Using last successful prediction.")
+                    if last_prediction is None:
+                        raise Exception("All fitting attempts failed")
+                    return last_prediction
+
+            else:
+                # For non-fit failures, raise immediately
+                print(f"Prediction failed with error: {error_str}")
+                raise
+
+    # This should not be reached but just in case
+    return last_prediction
 
 # input_data = {
 #     "budget": 19000000.0,

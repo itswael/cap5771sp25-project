@@ -1,7 +1,10 @@
 import streamlit as st
+from pandas.core.methods.to_dict import to_dict
+import json
 import predictor as pred
 import pandas as pd
 import plotly.express as px
+import os
 
 predictions_with_params = {
     1: {"revenue": 1000000, "params": {"name": "Movie 1", "budget": 5000000, "director": "Director A"}},
@@ -15,6 +18,11 @@ predictions_with_params = {
     9: {"revenue": 9000000, "params": {"name": "Movie 9", "budget": 45000000, "director": "Director I"}},
     10: {"revenue": 10000000, "params": {"name": "Movie 10", "budget": 50000000, "director": "Director J"}},
 }
+
+# Initialize predictions file only if it doesn't exist
+if not os.path.exists("temp/predictions.txt"):
+    with open("temp/predictions.txt", "w") as f:
+        json.dump(predictions_with_params, f)
 
 def main():
     st.set_page_config(page_title="𝚏𝚒𝚕𝚖𝚏𝚘𝚛𝚝𝚞𝚗𝚎", page_icon="🎬")
@@ -69,6 +77,8 @@ def prediction_page():
         if st.form_submit_button("Predict Revenue"):
             try:
                 prediction = pred.predictor(inputs)
+                # Store the prediction with parameters
+                update_predictions_with_params(prediction, inputs)
 
                 st.subheader("Prediction Results")
                 st.metric(label="Estimated Revenue",
@@ -97,8 +107,16 @@ def about_page():
 
 
 def insights_page():
+    global predictions_with_params
+    try:
+        with open("temp/predictions.txt", "r") as f:
+            loaded_predictions = json.load(f)
+            # Convert string keys back to integers
+            predictions_with_params = {int(k): v for k, v in loaded_predictions.items()}
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        st.warning(f"Could not load predictions: {e}")
+
     st.title("Today's Predictions")
-    #st.write("Shows plot of your today's prediction insights.")
 
     # Create three columns with specified width ratios
     col1, col2, col3 = st.columns([2, 5, 3])  # 20%, 50%, 30%
@@ -111,33 +129,39 @@ def insights_page():
     with col1:
         st.subheader("Predictions")
 
+        # Convert keys to integers to ensure proper sorting
+        integer_keys = [int(k) for k in predictions_with_params.keys()]
+        integer_keys.sort()
+
         selected_seq = st.selectbox(
             "Select prediction to view details:",
-            options=list(predictions_with_params.keys()),
-            index=st.session_state.selected_point - 1
+            options=integer_keys,
+            index=integer_keys.index(
+                st.session_state.selected_point) if st.session_state.selected_point in integer_keys else 0
         )
 
         pred_df = pd.DataFrame({
-            "Sequence": [k for k in predictions_with_params.keys()],
-            "Revenue ($)": [f"${d['revenue']:,.2f}" for d in predictions_with_params.values()],
-        }, index=None)
+            "Sequence": integer_keys,
+            "Revenue ($)": [f"${predictions_with_params[k]['revenue']:,.2f}" for k in integer_keys],
+        })
         st.dataframe(pred_df, use_container_width=True, hide_index=True)
 
-        # Add selection widget
-        st.session_state.selected_point = selected_seq
+        # Store selection as integer
+        st.session_state.selected_point = int(selected_seq)
 
     with col2:
         st.subheader("Prediction Trend")
 
         # Create DataFrame for plotting
         plot_df = pd.DataFrame({
-            'Sequence': list(predictions_with_params.keys()),
-            'Revenue': [item['revenue'] for item in predictions_with_params.values()],
+            'Sequence': integer_keys,
+            'Revenue': [predictions_with_params[k]['revenue'] for k in integer_keys],
         })
 
         # Create colors list to highlight selected bar
         colors = ['skyblue'] * len(plot_df)
-        colors[st.session_state.selected_point - 1] = 'orange'
+        selected_index = integer_keys.index(st.session_state.selected_point)
+        colors[selected_index] = 'orange'
 
         # Create interactive plot
         fig = px.bar(
@@ -157,26 +181,54 @@ def insights_page():
             hovermode='closest'
         )
 
-        # Display the plot (without trying to capture clicks)
+        # Display the plot
         st.plotly_chart(fig, use_container_width=True)
 
-        # Third column: Parameter details for the selected prediction
-        with col3:
-            selected_seq = st.session_state.selected_point
-            selected_prediction = predictions_with_params[selected_seq]
+    # Third column: Parameter details for the selected prediction
+    with col3:
+        selected_seq = st.session_state.selected_point
+        selected_prediction = predictions_with_params[selected_seq]
 
-            st.subheader(f"Parameters (Seq #{selected_seq})")
+        st.subheader(f"Parameters (Seq #{selected_seq})")
 
-            # Display selected prediction's input parameters
-            st.write("**Input Parameters:**")
-            for key, value in selected_prediction['params'].items():
-                st.write(f"- {key}: {value}")
+        # Display selected prediction's input parameters
+        st.write("**Input Parameters:**")
+        for key, value in selected_prediction['params'].items():
+            st.write(f"- {key}: {value}")
 
-            # Display prediction stats
-            st.write("**Prediction Results:**")
-            st.write(f"- Revenue: ${selected_prediction['revenue']:,.2f}")
-            if 'timestamp' in selected_prediction:
-                st.write(f"- Time: {selected_prediction['timestamp']}")
+        # Display prediction stats
+        st.write("**Prediction Results:**")
+        st.write(f"- Revenue: ${selected_prediction['revenue']:,.2f}")
+        if 'timestamp' in selected_prediction:
+            st.write(f"- Time: {selected_prediction['timestamp']}")
+
+def update_predictions_with_params(prediction, inputs):
+    # Update the predictions_with_params dictionary with the new prediction and inputs
+    # Maintain last 9 remove others and insert new one, which makes total to be 10
+    global predictions_with_params
+    # print("updating")
+    preds = {}
+    # Add new prediction with parameters
+    preds[1] = {
+        "revenue": float(prediction),
+        "params": inputs
+    }
+    # Increment sequence number for the next prediction
+    remaining_preds = len(predictions_with_params) if len(predictions_with_params) < 10 else 9
+    for i in range(1, remaining_preds+1):
+        preds[i+1] = predictions_with_params.pop(i)
+    predictions_with_params = preds
+    # store it in a text file
+    try:
+        with open("temp/predictions.txt", "w") as f:
+            json.dump(predictions_with_params, f)
+        # print("saved predictions to file")
+    except Exception as e:
+        print(f"Error saving predictions: {e}")
 
 if __name__ == "__main__":
     main()
+
+# print(predictions_with_params)
+# update_predictions_with_params(1000000, {"name": "Movie 11", "budget": 5000000, "director": "Director A"})
+# print(predictions_with_params)
