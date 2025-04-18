@@ -86,8 +86,8 @@ def process_data(idf):
     imputer = SimpleImputer(strategy="median")
     df[numerical_features] = imputer.fit_transform(df[numerical_features])
 
-    scaler = StandardScaler()
-    df[numerical_features] = scaler.fit_transform(df[numerical_features])
+    # scaler = StandardScaler()
+    # df[numerical_features] = scaler.fit_transform(df[numerical_features])
 
     df = remove_unnecessary_columns(df)
 
