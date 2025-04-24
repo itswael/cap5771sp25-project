@@ -7,6 +7,15 @@
 ## Project Overview
 This project performs a detailed exploratory data analysis (EDA) on a movie dataset to uncover revenue trends by year and month. The objective is to understand historical revenue shifts, identify seasonal impacts on revenue, and predict revenue which can be used for optimal movie release periods.
 
+## Tool URL
+[Movie Revenue Prediction Streamlit](https://filmfortune.streamlit.app/)
+
+## Tool Demo
+[tool Demo Link](https://drive.google.com/file/d/1dV5OWhUYN5Kp_hZegaseDRD0EJ1ABk6G/view?usp=sharing)
+
+## Project Demo
+[Project Demo Link](https://drive.google.com/file/d/1TcVHPMGlWXuf8tRgKJTVE-B5t6e17L4-/view)
+
 ## Project Structure
 ```
 cap5771sp25-project/
@@ -17,17 +26,25 @@ cap5771sp25-project/
 ├── features                        # Processed feature outputs
 │   ├── features_scores.txt         # Feature importance metrics
 │   └── significant_features.txt    # Statistically significant features
+├── output                          
+│   └── output.csv                  # Training dataset
 ├── Report                          # Project documentation
 │   ├── Milestone1.pdf              # Milestone 1 report
-│   └── Milestone2.pdf              # Milestone 2 report
+│   ├── Milestone2.pdf              # Milestone 2 report
+│   └── Milestone3.pdf              # Milestone 3 report
 ├── Scripts                         # Source code directory
 │   ├── __pycache__                 # Python bytecode cache
 │   ├── main.ipynb                  # Jupyter notebook for Milestone 1 and Milestone 2
-│   ├── preprocessor.py             # Data cleaning scripts
-│   └── requirements.txt            # Python dependencies
+│   └── preprocessor.py             # Data cleaning scripts
+├── temp
+│   └── predictions.txt             # Historical Predictions
 ├── .gitignore                      # Git exclusion rules
 ├── README.md                       # Project overview document (This file)
-└── License                         # MIT License File
+├── License                         # MIT License File
+├── predictor.py                    # Functions to train model and predict the revenue
+├── preprocessor.py                 # Helper functions to pre process the input data
+├── requirements.txt                # Python dependencies
+└── streamlit_app.py                # Hosting the code in production
 ```
 
 ## Dataset Description
