@@ -26,6 +26,8 @@ cap5771sp25-project/
 ├── features                        # Processed feature outputs
 │   ├── features_scores.txt         # Feature importance metrics
 │   └── significant_features.txt    # Statistically significant features
+├── output                          
+│   └── output.csv                  # Training dataset
 ├── Report                          # Project documentation
 │   ├── Milestone1.pdf              # Milestone 1 report
 │   ├── Milestone2.pdf              # Milestone 2 report
@@ -39,10 +41,10 @@ cap5771sp25-project/
 ├── .gitignore                      # Git exclusion rules
 ├── README.md                       # Project overview document (This file)
 ├── License                         # MIT License File
-├── predictor.py                    # 
-├── preprocessor.py                 # 
+├── predictor.py                    # Functions to train model and predict the revenue
+├── preprocessor.py                 # Helper functions to pre process the input data
 ├── requirements.txt                # Python dependencies
-└── streamlit_app.py                # 
+└── streamlit_app.py                # Hosting the code in production
 ```
 
 ## Dataset Description
