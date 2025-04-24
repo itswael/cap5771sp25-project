@@ -7,6 +7,12 @@
 ## Project Overview
 This project performs a detailed exploratory data analysis (EDA) on a movie dataset to uncover revenue trends by year and month. The objective is to understand historical revenue shifts, identify seasonal impacts on revenue, and predict revenue which can be used for optimal movie release periods.
 
+## Tool URL
+[Movie Revenue Prediction](https://filmfortune.streamlit.app/)
+
+## Tool Demo
+[Demo Link](https://drive.google.com/file/d/1dV5OWhUYN5Kp_hZegaseDRD0EJ1ABk6G/view?usp=sharing)
+
 ## Project Structure
 ```
 cap5771sp25-project/
